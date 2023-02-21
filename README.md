@@ -9,7 +9,7 @@ This repo is a wrapper for the implementation of the EXSIM (stochasict finite-fa
 ## Usage
 
 ```shell
-"mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
+$ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
 ```
 
 ## Contributing
