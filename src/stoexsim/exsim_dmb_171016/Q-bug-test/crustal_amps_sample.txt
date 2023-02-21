@@ -1,0 +1,6 @@
+5                ! nfrequencies; if amps not wanted, specify nfrequencies = 1, frequency, amp = 1, 1
+    0.5    1.0   ! frequency, amplification
+    1.0    1.13  ! This is the Atkinson and Boore (2006)
+    2.0    1.22  ! ENA hard rock amplification.
+    5.0    1.36  
+    10.0   1.41

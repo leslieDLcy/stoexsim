@@ -1,0 +1,4 @@
+ nptsTotalWave =    39425 npw2TotalWave =    65536
+
+ itr  i0  j0   i   j t_arrive(i0,j0) t_arrive_min t_arrive(i,j) risetime(i,j) risetime_max dur_path(i,j) dur_sub(i,j) t_arrive(i,j)+dur_sub(i,j) imx jmx t_arrive(imax,jmax) dur_sub(imax,jmax) t_arrive(imax,jmax)+dur_sub(imax,jmax) risetime_max t_end_max
+   1   1   1   1   1            27.0         27.0          27.0           0.1          0.1          8.70         8.78                       35.8   1   1                27.0                8.8                                   35.8          0.1      35.8

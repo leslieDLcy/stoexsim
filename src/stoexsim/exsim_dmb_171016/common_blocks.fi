@@ -1,0 +1,31 @@
+      dimension freq_crustal_amps(500), amp_crustal_amps(500),
+     :          freq_site_amps(500),    amp_site_amps(500)
+      real rho, beta, prtitn, rtp, fs,
+     :   fmax, akappa_0, dkappadmag, amagkref,
+     :   akappa,
+     :   fr1, qr1, s1, ft1, ft2, fr2, qr2, s2, c_q, 
+     :   qt1, st,
+     :   taper,
+     :   totalMoment,
+     :   c4taper, fc4taper,
+     :   flocut, pi, twopi
+      integer  
+     :   iwind,n_crustal_amps,n_site_amps, 
+     :   nsubs, nslope
+      character f_crustal_amps*30,f_site_amps*30
+      common /params/
+     :   rho, beta, prtitn, rtp, fs,
+     :   fmax, akappa_0, dkappadmag, amagkref,
+     :   akappa,
+     :   fr1, qr1, s1q, ft1, ft2, fr2, qr2, s2q, c_q,
+     :   qt1, stq,
+     :   taper,
+     :   iwind, totalMoment,
+     :   c4taper, fc4taper,
+     :   n_crustal_amps, freq_crustal_amps, amp_crustal_amps, 
+     :   n_site_amps,    freq_site_amps,    amp_site_amps, 
+     :   nsubs, flocut, nslope, pi, twopi
+      common /par/ iFFTsub, dt, npadl, npadt
+      common /seed/ iseed  ! Dave added this statement
+      common /fnames/ f_crustal_amps, f_site_amps
+     

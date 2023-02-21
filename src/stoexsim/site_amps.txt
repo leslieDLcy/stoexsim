@@ -1,0 +1,8 @@
+6              ! nfrequencies
+0.5    1.00 ! frequency, ampplification
+1      1.13 ! no amplification for this case.
+2      1.22
+5      1.36
+10     1.41
+50     1.41
+

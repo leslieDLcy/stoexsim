@@ -1,0 +1,199 @@
+!Parameter file for program exsim_dmb
+! Revision of program involving a change in the control file on this date:
+   11/22/11
+!
+!-------------------------------------------------------------------------
+! ******* Input parameters common to SMSIM and EXSIM (in the order in which 
+!         they appear in the SMSIM parameter file) *******
+!-------------------------------------------------------------------------
+!
+!Title
+  Runs for comparing EXSIM and SMSIM 
+!rho, beta, prtitn, radpat, fs:
+    2.8 3.7 0.707 0.55 2.0
+!gsprd: r_ref, nsegs, (rlow(i), a_s, b_s, m_s(i))  (Usually set
+!r_ref = 1.0 km)
+    1.0
+    3
+      1.0 -1.3 0.0 6.5
+     70.0 +0.2 0.0 6.5
+    140.0 -0.5 0.0 6.5
+!q: fr1, Qr1, s1, ft1, ft2, fr2, qr2, s2, c_q
+   1.0 1000.0 0.0 1.4242 1.4242 1.0 893.0 0.32 3.7   
+!path duration (ndur_hinges, 
+! (rdur(i), dur(i), i = 1, ndur_hinges), durslope)
+    4
+    0.0 0.0
+   10.0 0.0
+   70.0 9.6
+  130.0 7.8
+  0.04
+!site diminution parameters: fmax, kappa_0, dkappadmag, amagkref
+! (NOTE: fmax=0.0 or kappa_0=0.0 => fmax or kappa are not used.  I included this
+!  to prevent the inadvertent use of both fmax and kappa to control the diminution
+!  of high-frequency motion (it would be very unusual to use both parameters
+!  together.  Also note that if do not want to use kappa, dkappadmag must also
+!  be set to 0.0).
+    0.0 0.005 0.0 6.0
+!low-cut filter corner, nslope (0 ==> no filter)
+ 0.05 8
+!window params: iwind(0=box,1=exp), taper(<1), eps_w, eta_w, f_tb2te, f_te_xtnd
+! (see SMSIM manual for the meaning of the parameters)
+! As of 11/25/11, I will not use the shape parameters, using the default
+! parameters in the call to wind2 instead.  The only parameters I use as of this
+! date are iwind and taper.
+! BUT: placeholders must be included for eps_w, eta_w, f_tb2te, f_te_xtnd, because some day
+! they may be used.
+    0 0.01 0.2 0.05 2.12 2.0
+!timing stuff: dur_fctr, dt, tshift, seed, nsims, iran_type (0=normal;1=uniform)
+! NOTE: these are the SMSIM parameters, but for now (11/25/11) I will read and use
+! the current EXSIM parameters, as given in the next uncommented line.
+! The reason not to change to the SMSIM parameters is that I do not have the time to
+! make sure that the program is revised correctly.   The tpadl and tpadt params do not
+! automatically account for magnitude, and if the values are not changed each time amag
+! is changed they may be unnecessarily long for small events and too short for large 
+! events.  It is up to the user to specify adequate values (these values are adjusted
+! to appropriate sizes automatically in SMSIM).
+!    1.3  0.002 60.0 123.0 100 0
+!tpadl, tpadt, dt, seed, nsims
+ 50.0 20.0 0.002 309.0 5             	
+!
+!-------------------------------------------------------------------------
+! ******* Input parameters specific to EXSIM *******
+!-------------------------------------------------------------------------
+!
+! SOURCE PARAMETERS:
+!
+!MW, Stress
+  7.0 140.0    	
+!lat and lon of corner on upper edge of fault
+  0.0 0.0  
+!strike,dip, depth of corner on upper edge of fault
+  0.0 50.0 2.0            	
+!fault type (S=strikeslip; R=reverse; N=normal; U=undifferentiated) 
+! (Only used if Wells and Coppersmith is used to obtain FL and FW).
+  R                               
+!fault length and width, dl, dw, stress_ref
+!Note: Force program to use Wells and Coppersmith (WC) for FL and/or FW if
+! either entry = 0.0.
+! If Wells and Coppersmith are used to obtain FL and/or FW, the WC values are
+! modified to account for the scaling implied by differences in the stress
+! specified above and a stress that is assumed to be valid for the generic WC
+! relations; this stress is stress_ref. The value of 70 bars is an educated
+! guess for stress_ref, but it is not based on a quantitative analysis.
+! The WC values of FL and/or FW are multiplied by the factor
+! (stress_ref/stress)^(1/3).
+! Note that four entries on the following line are needed as placeholders,
+! even if not used)
+  0  0  1.5 1.5 70.0 !fault length and width, dl, dw, stress_ref
+!vrup/beta 
+  0.8              
+!hypo location in along fault and down dip distance from the fault 
+!reference point (an upper corner)(-1.0, -1.0 for a random location); 
+!number of iterations over hypocenter (need an entry, but only used if 
+!either of the first two values are -1.0, indicating a random location)
+ -1.0 -1.0 2                           
+!Enter type of risetime (1=original, 2=1/f0)
+ 2
+!DynamicFlag (0=no), PulsingPercent
+  1   50.0                  	
+!iflagscalefactor (1=vel^2; 2=acc^2; 3=asymptotic acc^2 (dmb): USE 2!)
+  2                               
+!islipweight = -1  -> unity slip for all subfaults,
+!islipweight =  0  -> specify slips read from text file, 
+!islipweight =  1  -> random weights
+  -1                       	
+! Text file containing matrix of slip weights (need a placeholder
+! even if do not assign the slip weights
+  slip_weights.txt
+!deterministic flag (0=no deterministic pulse),gama,nu,t0, impulse peak
+  0   1.0  90.0  4.0  10.		
+!
+!-------------------------------------------------------------------------
+! PARAMETERS RELATED TO PATH AND SITE:
+!-------------------------------------------------------------------------
+!
+!Name of crustal amplification file:
+!This file contains amplifications, usually without any attenuation, from the source to 
+!near the surface.  It is often computed using the square-root-impedance method
+!(see Boore, D. M. (2013). The uses and limitations of the square-root impedance method for 
+!computing site amplification, Bull. Seismol. Soc. Am. 103, 2356--2368), as implemented
+!in the programs site_amp or site_amp_batch, available from my SMSIM software package.
+!The attenuation is usually included through the kappa_0 parameter specified in the
+!!site diminution parameters: fmax, kappa_0, dkappadmag, amagkref line above
+  crustal_amps_sample.txt
+!Name of site amplification file:
+!This file allows additional site response to be included, if desired (I have never used it;
+!this file has been carried over from D. Motazedian's original version of EXSIM).  
+!For example, it could include resonant near-surface amplification and attenuation.  
+  site_amps_sample.txt
+!
+!-------------------------------------------------------------------------
+! PARAMETERS RELATED TO COMPUTATIONS OF AVERAGES:
+!-------------------------------------------------------------------------
+!
+!iflagfas_avg (1=arithmetic, 2=geometric, 3=rms: USE 3!)
+  3                               
+!iflagpsa_avg_over_sims (1=arithmetic: USE 1!, 2=geometric, 3=rms)
+! NOTE on 22 November 2011.  I used to advise using the geometric mean, but in
+! the course of working on a paper with Eric Thompson on RV calculations in SMSIM
+! I found that my TD calculations have used geoemtric averages until 03 August 1994,
+! when I switched to arithmetic averages, apparently as a result of a recommendation
+! by Bill Joyner.
+  1                               
+!iflagpsa_avg_over_hypos (1=arithmetic, 2=geometric, 3=rms)
+! The program first computes the average ground-motion intensity measure over the number
+! of simulations for a given hypocenter, and then computes an average of these over the
+! hypocenters.  There might some justification to use a geometric mean for this.
+  2                               
+!
+!-------------------------------------------------------------------------
+! PARAMETERS RELATED TO THE OUTPUT:
+!-------------------------------------------------------------------------
+!
+!Write acc, psa, husid files for each site?
+ Y
+!Output file names stem:
+  M7.0_dl_dw_1.5_140b_2hyp_5trials_pulse50_1_f0_rt
+! %damping of response spectra
+ 5.0
+!# of f and Min and Max F for response spectra
+  100 0.1   99.               	
+!no. of frequencies for summary output (10 max):
+ 4 
+!frequency (-1.0, 99.0 for pgv, pga):
+ -1.0 99.0 0.5 5.0
+!
+!-------------------------------------------------------------------------
+! PARAMETERS RELATED TO THE SITES AT WHICH MOTIONS ARE COMPUTED:
+! Put this last for convenience in editing the params file.  For example, the site list 
+! can be very long, but by inserting "stop" in the list it is easy to select a small subset 
+! of site at which motions will be computed.
+!-------------------------------------------------------------------------
+!
+!Site coord flag (1=lat,long; 2=R,Az; 3=N,E)
+  2                      	
+!If "Y" below and strike = 0.0:
+!  if site coord flag = 2, move origin of the radial line to the midpoint of
+!                         the top edge of the fault
+!  if site coord flag = 3 and siteLocation(1) = 0, redefine 
+!                         siteLocation(1) = 0 to be the midpoint of the 
+!                         top edge of the fault (so that the sites will be
+!                         along a line normal to the midpoint)
+!  if site coord flag = 3 and siteLocation(2) = 0, redefine
+!                         siteLocation(1) = 0 to be the far end of the fault,
+!                         so that the sites are along a line along the
+!                         strike of the fault 
+ Y
+!Coordinates of each site (siteLocation(1), siteLocation(2)):
+  1              45
+  100            45
+ stop
+ 
+ 1000           45
+ 1              90
+ 100            90
+ 1000           90
+   
+  
+ 

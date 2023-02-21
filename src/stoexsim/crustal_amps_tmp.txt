@@ -1,0 +1,3 @@
+2	! nfrequencies  
+0.1 0.8425705956237183 ! frequency, amplification
+100 0.8425705956237183

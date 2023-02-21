@@ -1,0 +1,3 @@
+  isite ihyp  i0  j0   i   j nsubs slipWeights Diff_T_arrive NoOfEffectiveSubfaults NumberOfActiveSubs     f0main 1stElmntF0         f0        hij iflagscalefactor   1/f0main    1/1stF0       1/f0 riset_orig    dur_sub subFaultM0  Tot/subM0
+      1    1   1   1   1   1     1  1.0000E+00     0.000E+00                      1                  1  1.330E+01  1.330E+01  1.330E+01  1.000E+00                2  7.520E-02  7.520E-02  7.520E-02  4.465E-02  9.926E-02  3.548E+20  1.000E+00
+      2    1   1   1   1   1     1  1.0000E+00     0.000E+00                      1                  1  1.330E+01  1.330E+01  1.330E+01  1.000E+00                2  7.520E-02  7.520E-02  7.520E-02  4.465E-02  8.777E+00  3.548E+20  1.000E+00

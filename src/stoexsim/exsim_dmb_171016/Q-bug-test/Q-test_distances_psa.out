@@ -1,0 +1,4 @@
+ Average motions, where for each site the motions are averaged over  20 simulations and   1 hypocenters (more than 1 when random hypocenters are specified in the input params file).
+ isite sitecoord(1) sitecoord(2) isitecoordflag site_lat_degrees site_lon_degrees     d_jb   d_cd2f       freq   psa-1.00       freq   psa99.00       freq   psa00.50       freq   psa05.00
+     1        7.154        7.071              3            0.065            0.064     9.79    10.05 -1.000E+00  1.338E-01  9.900E+01  2.098E+01  5.000E-01  1.703E-02  5.000E+00  1.984E+00
+     2       70.794       70.711              3            0.640            0.635    99.79    99.82 -1.000E+00  7.497E-04  9.900E+01  4.402E-02  5.000E-01  2.772E-04  5.000E+00  5.140E-02
