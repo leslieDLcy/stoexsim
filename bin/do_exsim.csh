@@ -1,4 +1,10 @@
 #!/bin/tcsh
+
+###
+# the base implementation of EXSIM by Ben
+###
+
+
 rm -rf output
 # Setup some variables
 set pi=3.14159265

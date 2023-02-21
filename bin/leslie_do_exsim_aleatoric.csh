@@ -1,7 +1,9 @@
 #!/bin/tcsh
 rm -rf EXSIM_aleatoric/make_ds_aleatoric/output
 
-# Previously, 4 inputs are given by args: 
+### Aleatoric parameters by Leslie (Y. Chen) ###
+
+# calling signature:
 # "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
 # Now to facilitate multi-processing, they are instead directly given below 
 
@@ -71,7 +73,7 @@ set DYN_RAN2_Td575_interEV=`bash -c 'echo $RANDOM'` # inter-event epsilon (used 
 # Leslie add: below is to set up mean SD parameter
 # we further model `SD` as a log10normal distribution 
 
-# Previous code block by Bens
+# Previous example by Ben
 ########################
 # set sd=`echo "" | awk '{print '$sd_scale'*'$sd_low'*10^('$sdi_in'*('$Mw'-'$sd_low_M'))}'`
 # # If above sd_M hinge
