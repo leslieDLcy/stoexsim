@@ -6,7 +6,7 @@ A stochastic implementation of EXSIM
 
 This repo is a wrapper (CLI interface) for the implementation of the EXSIM (stochasict finite-fault model). Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
 
-> *A concise introduction is shown below and a thorough Python implementation can be found in another repo.*
+> *A concise introduction is shown below while a thorough Python implementation can be found in another repo.*
 
 <details><summary>Stochastic finite fault model</summary>
 <p>
