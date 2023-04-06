@@ -1,5 +1,5 @@
 #!/bin/tcsh
-rm -rf src/stoexsim//output
+rm -rf src/stoexsim/output
 
 # Previously, 4 inputs are given by args: 
 # "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
@@ -217,8 +217,8 @@ set SITEAMP=`python -c "import numpy; print(10**(numpy.random.uniform(-0.15, 0.1
 
 
 # We will work and store the results in this directory:
-mkdir -p src/stoexsim//output 
-cd src/stoexsim//output 
+mkdir -p src/stoexsim/output 
+cd src/stoexsim/output 
 
 echo $epsilon >> LW_epsilon.dat
 
@@ -272,9 +272,9 @@ end
 # foreach file ( *.out )
 # 	gzip $file 
 # end
-cd ../
+cd ../../../
 mkdir -p simulation_results
-cat output/EXSIM_DMB_M6.5__acc_hypo001_sim001_s001.out > simulation_results/accrecords_sd_${sd_sample}.txt
+cat src/stoexsim/output/EXSIM_DMB_M6.5__acc_hypo001_sim001_s001.out > simulation_results/accrecords_sd_${sd_sample}.txt
 
 @ iter+=1
 end
