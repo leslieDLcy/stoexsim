@@ -1,9 +1,7 @@
 #!/bin/tcsh
-rm -rf EXSIM_aleatoric/make_ds_aleatoric/output
+rm -rf src/stoexsim//output
 
-##### Aleatoric parameters added by Leslie (Y. Chen) #####
-
-# calling signature:
+# Previously, 4 inputs are given by args: 
 # "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
 # Now to facilitate multi-processing, they are instead directly given below 
 
@@ -46,15 +44,14 @@ while ( $iter <= $niter )
 set DYN_RAN=`bash -c 'echo $RANDOM'` 
 
 # Hint: -Normal distribution - usage: ndev <mean> <stdev> $RANDOM [niter] [min max]\n
-set epsilon=`EXSIM_aleatoric/make_ds_aleatoric/random/normdev 0 1 $RANDOM $DYN_RAN -5 5` #normal distibution
+set epsilon=`src/stoexsim/random/normdev 0 1 $RANDOM $DYN_RAN -5 5` #normal distibution
 #set epsilon=0
-
 
 ##### Depth is drawn from a truncated Normal distribution #####
 set Zh=$argv2	# Depth to hypocentre (this will be 3 km)
 set Zh_std=10.
 # Hint: -Normal distribution - usage: ndev <mean> <stdev> $RANDOM [niter] [min max]\n
-set Zh=`EXSIM_aleatoric/make_ds_aleatoric/random/normdev $Zh $Zh_std $RANDOM $DYN_RAN 2 30`  #normal distibution
+set Zh=`src/stoexsim/random/normdev $Zh $Zh_std $RANDOM $DYN_RAN 2 30`  #normal distibution
 
 
 ##### set up Kappa aleatoric #####
@@ -67,13 +64,16 @@ foreach Mw ( $argv3 )
 set DYN_RAN2_Td575_interEV=`bash -c 'echo $RANDOM'` # inter-event epsilon (used for Td)
 
 
+printf "%%==========================================================%%\n"
+printf "%% Stochastic finite fault model with aleatoric uncertainty %%\n"
+printf "%%==========================================================%%\n"
 
 
 ##### Set the SD (stress-parameter) at the given M aleatoric #####
 # Leslie add: below is to set up mean SD parameter
 # we further model `SD` as a log10normal distribution 
 
-# Previous example by Ben
+# Previous code block by Bens
 ########################
 # set sd=`echo "" | awk '{print '$sd_scale'*'$sd_low'*10^('$sdi_in'*('$Mw'-'$sd_low_M'))}'`
 # # If above sd_M hinge
@@ -108,12 +108,12 @@ set sd_log10=`echo "" | awk '{print ((log('$sd_inbar')/log(10.)))}'`
 set sd_dev=0.1
 
 # Hint: -Normal distribution - usage: ndev <mean> <stdev> $RANDOM [niter] [min max]\n
-set sd_sample_log10=`EXSIM_aleatoric/make_ds_aleatoric/random/normdev $sd_log10 $sd_dev $RANDOM $DYN_RAN`  #normal distibution
+set sd_sample_log10=`src/stoexsim//random/normdev $sd_log10 $sd_dev $RANDOM $DYN_RAN`  #normal distibution
 
 # change the sample from log scale back to natural scale
 set sd_sample=`echo "" | awk '{print ((10^('$sd_sample_log10')))}'`
 
-echo "a SD sample used in computation" $sd_sample
+# echo "a SD sample used in computation" $sd_sample
 ## change from here to below that '$sd' -> '$sd_sample' ###
 
 
@@ -135,7 +135,7 @@ if ( `echo "" | awk '{if('$Mw'<5.25){print 1}; if('$Mw'>=5.25){print 0}; }'` == 
 	set FW=`echo "" | awk '{print '$W'}'`
 	set Wx=`echo "" | awk '{print '$W'*cos('$dip'*'$pi'/180)}'`
 	set Wy=`echo "" | awk '{print '$W'*sin('$dip'*'$pi'/180)}'`
-    echo "Fault Dims (mean): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
+    # echo "Fault Dims (mean): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
 	# Add epsilon to fault dimensions
 	set W=`echo ""| awk '{print '$W'*10^('$sigma_W'*'$epsilon')}'`
 	set Wx=`echo ""| awk '{print '$Wx'*10^('$sigma_W'*'$epsilon')}'`
@@ -143,7 +143,7 @@ if ( `echo "" | awk '{if('$Mw'<5.25){print 1}; if('$Mw'>=5.25){print 0}; }'` == 
 	set FW=`echo ""| awk '{print '$FW'*10^('$sigma_W'*'$epsilon')}'`
 	set L=`echo ""| awk '{print '$L'*10^('$sigma_L'*'$epsilon')}'`
 	set FL=`echo ""| awk '{print '$FL'*10^('$sigma_L'*'$epsilon')}'`
-    echo "Fault Dims (+/- sigma): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
+    # echo "Fault Dims (+/- sigma): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
 	set Ztop=`echo "" | awk '{print '$Zh'-'$Wy'/2}'` # Assume Zh at centre of fault
 	set Ztop=`echo "" | awk '{if('$Ztop' > '$Ztop_min'){ print '$Ztop'};if('$Ztop'<= '$Ztop_min'){print '$Ztop_min' }}'`
 endif
@@ -180,7 +180,11 @@ if ( `echo "" | awk '{if('$Mw'<5.25){print 1}; if('$Mw'>=5.25){print 0}; }'` == 
 	set FL=$L
 	set FW=$W
 	# Add epsilon to fault dimensions
-    echo "Fault Dims (mean): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
+    # echo "Fault Dims (mean): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
+	
+	printf "Fault Dims (mean): |"
+	printf "%3s:%.3f|" "W" $FW "L" $FL "Wx" $Wx "Wy" $Wy "dip" $dip
+
 	set W=`echo ""| awk '{print '$W'*10^('$sigma_W'*'$epsilon')}'`
 	set Wx=`echo ""| awk '{print '$Wx'*10^('$sigma_W'*'$epsilon')}'`
 	set Wy=`echo ""| awk '{print '$Wy'*10^('$sigma_W'*'$epsilon')}'`
@@ -189,7 +193,7 @@ if ( `echo "" | awk '{if('$Mw'<5.25){print 1}; if('$Mw'>=5.25){print 0}; }'` == 
 	set FL=`echo ""| awk '{print '$FL'*10^('$sigma_L'*'$epsilon')}'`
 	set Ztop=`echo "" | awk '{print '$Zh'-'$Wy'/2}'`
 	set Ztop=`echo "" | awk '{if('$Ztop' > '$Ztop_min'){ print '$Ztop'};if('$Ztop'<= '$Ztop_min'){print '$Ztop_min' }}'`
-    echo "Fault Dims (+/- sigma): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
+    # echo "Fault Dims (+/- sigma): W = "$FW"; L = "$FL"; Wx = "$Wx"; Wy = "$Wy" (dip = "$dip")"
 	if ( `echo "" | awk '{if(3+'$Wy'>'$SeisDepth'){print 1}else{print 0} }'` == 1 )  then
         # If so set to max width (SeisDepth-3km) and adjust FL to maintain fault area
 
@@ -213,8 +217,8 @@ set SITEAMP=`python -c "import numpy; print(10**(numpy.random.uniform(-0.15, 0.1
 
 
 # We will work and store the results in this directory:
-mkdir -p EXSIM_aleatoric/make_ds_aleatoric/output 
-cd EXSIM_aleatoric/make_ds_aleatoric/output 
+mkdir -p src/stoexsim//output 
+cd src/stoexsim//output 
 
 echo $epsilon >> LW_epsilon.dat
 
@@ -244,34 +248,33 @@ cp ../site_amps.txt .
 cat Rjb.dat >> exsim_dmb.params
 echo "stop" >> exsim_dmb.params
 
-# Print out the inputs
-echo "M = "$Mw
-echo "Epsilon= "$epsilon
-echo "Iteration = "$iter
-echo "Ztop = "$Ztop
-echo "L,W Epsilon = "$epsilon
 
-echo "\nAleatoric Uncertain Params:"
-echo "depth = "$Zh
-echo "stress drop = "$sd_sample
-printf "Kappa= "$Kappa
-printf "Site amplification "$SITEAMP
-printf "geometric_speading:b1= "$b1
-printf "geometric_speading= "$b2
-echo "\n"
 
+##### Print out the inputs #####
+echo ""
+echo ""
+printf "Deterministic Setting:\n"
+printf "%-12s: %.3f\n" "M" $Mw "Epsilon" $epsilon "Iteration" $iter "Ztop" $Ztop
+
+echo ""
+printf "Uncertain Param samples:\n"
+printf "%-12s: %.3f\n" "depth" $Zh "stress drop" $sd_sample "kappa" $Kappa "Site amp" $SITEAMP "b1" $b1 "b2" $b2
+
+echo ""
+printf "++++++ Simulating ++++++ \n"
 # Run the code (Dave Boores Version of EXSIM)
 echo "" | ../exsim_dmb_171016/exsim_dmb_be 
 
 end
 
+# if output in zip file
 # #compress
 # foreach file ( *.out )
 # 	gzip $file 
 # end
 cd ../
-mkdir -p acc_aleatoric_warehouse
-cat output/EXSIM_DMB_M6.5__acc_hypo001_sim001_s001.out > acc_aleatoric_warehouse/accrecords_sd_${sd_sample}.txt
+mkdir -p simulation_results
+cat output/EXSIM_DMB_M6.5__acc_hypo001_sim001_s001.out > simulation_results/accrecords_sd_${sd_sample}.txt
 
 @ iter+=1
 end
