@@ -1,7 +1,7 @@
 #!/bin/tcsh
 rm -rf EXSIM_aleatoric/make_ds_aleatoric/output
 
-### Aleatoric parameters by Leslie (Y. Chen) ###
+##### Aleatoric parameters added by Leslie (Y. Chen) #####
 
 # calling signature:
 # "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
