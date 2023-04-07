@@ -21,15 +21,13 @@ Particularly, the variability of such effects in the spectral formulation and he
 
 
 ## Functionalities in short
-StoEXSIM is:
 
 - [x] A CLI interface facilitating the use of stochastic finite fault model;
 - [x] Aleatoric uncertainty on the region-specific parameters
 
 ## how *stochastic* the simulations are ?
 
-Though bearing the name "*the stochastic method*" for a while, Boore's implementation[^1] is not the only stochastic implementation in simulating ground motions of certainty earthquake scenarios. It is, however, more appropritely referred to as *stochastic source method*[^2].
-
+Though bearing the name "*the stochastic method*" for a while, Boore's implementation[^1] is not the only stochastic implementation in simulating ground motions of certainty earthquake scenarios. It is, however, more appropritely referred to as *stochastic source method*[^2]. A standard implementation, shown below, will consider random slip distribution and hypocenter location, coupled with random phase in generating time series.  
 
 ```shell
 $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
@@ -37,10 +35,25 @@ $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $
 
 
 
+
+
+
 ## References
 
-[^1]: something
-[^2]: very new line should be pre
+Citation:
+```markdown
+@article{chen2023physics,
+  title={A physics-informed Bayesian framework for characterizing ground motion process in the presence of missing data},
+  author={Chen, Yu and Patelli, Edoardo and Edwards, Benjamin and Beer, Michael},
+  journal={Earthquake Engineering \& Structural Dynamics},
+  publisher={Wiley Online Library}
+}
+```
+
+
+
+[^1]: Atkinson etc. Stochastic Modeling of California Ground Motions
+[^2]: Rezaeian etc. Simulation of synthetic ground motions for specified earthquake and site characteristics.
 
 
 
