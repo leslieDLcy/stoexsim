@@ -20,14 +20,19 @@ Particularly, the variability of such effects in the spectral formulation and he
 
 
 
-## Usage
+## In short
+StoEXSIM is:
+
+- [x] A CLI interface facilitating the use of stochastic finite fault model;
+- [x] Aleatoric uncertainty on the region-specific parameters
+
+## how *stochastic* the simulations are ?
 
 ```shell
 $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
 ```
 
-- [x] A CLI interface facilitating the use of stochastic finite fault model;
-- [x] Aleatoric uncertainty on the region-specific parameters
+
 
 ## References
 
