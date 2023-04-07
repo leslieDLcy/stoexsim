@@ -29,15 +29,18 @@ Particularly, the variability of such effects in the spectral formulation and he
 
 ## how *stochastic* the simulations are ?
 
+1. standard implementation
 Though bearing the name "*the stochastic method*" for a while, Boore's model[^1] is not the only stochastic implementation in simulating ground motions of certainty earthquake scenarios. It should be, however, more appropritely referred to as *stochastic source method*[^2]. A standard implementation, shown below, will consider random slip distribution and hypocenter location, coupled with random phase in generating time series.  
 
 ```shell
 $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
 ```
 
+2. aleatoric implementation
 One step further, to reflect the aleatoric uncertainty of many region-specific parameters and then the variability of ground motions:
 ![alt text](visualizations/alea_single.jpeg "single aleatoric simulations")
 
+3. ensemble implementation
 For practical convenience, you will probably want to generate a suite of simulations for a certain earthquake scenario. Input the number of simulations when prompted.
 ![alt text](visualizations/alea_ensemble.jpeg "a suite of simulations")
 
