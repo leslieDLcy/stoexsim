@@ -4,11 +4,11 @@ Stochastic ground motion simulations with variability in model parameters.
 
 ## Introduction
 
-A CLI interface for the implementation of the EXSIM (stochasict finite-fault model). Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
+A CLI interface for the implementation of the `stochasict finite-fault model`. Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
 
 > *Note: A concise introduction is shown below while a thorough Python implementation can be found in another [repo](https://github.com/leslieDLcy/eqstochsim).*
 
-<details><summary>formulation of the Stochastic finite fault model</summary>
+<details><summary>formulation of the `stochastic finite fault model`</summary>
 <p>
 
 A stochastic representation that encapsulates the physics of the earthquake process and wave propagation plays the central role, from the seismological perspective, in characterizing the ground motions. One of the most desired advantage is that such type of representations explicitly distill the knowledge of various factors affecting ground motions (e.g. source, path, and site) into a parametric formulation.
