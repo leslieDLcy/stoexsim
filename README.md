@@ -34,11 +34,10 @@ $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $
 ```
 
 One step further, to reflect the aleatoric uncertainty of many region-specific parameters and then the variability of ground motions:
-
-
+![alt text](visualizations/alea_single.jpeg "single aleatoric simulations")
 
 For practical convenience, you will probability want to generate a suite of simulations for a certain earthquake scenario:
-
+![alt text](visualizations/alea_ensemble.jpeg "a suite of simulations")
 
 
 
