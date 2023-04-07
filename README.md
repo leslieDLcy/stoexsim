@@ -20,13 +20,16 @@ Particularly, the variability of such effects in the spectral formulation and he
 
 
 
-## In short
+## Functionalities in short
 StoEXSIM is:
 
 - [x] A CLI interface facilitating the use of stochastic finite fault model;
 - [x] Aleatoric uncertainty on the region-specific parameters
 
 ## how *stochastic* the simulations are ?
+
+Though bearing the name "*the stochastic method*" for a while, Boore's implementation[^1] is not the only stochastic implementation in simulating ground motions of certainty earthquake scenarios. It is, however, more appropritely referred to as *stochastic source method*[^2].
+
 
 ```shell
 $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
@@ -36,7 +39,12 @@ $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $
 
 ## References
 
-Interested in contributing? Check out the contributing guidelines. Please note that this project is released with a Code of Conduct. By contributing to this project, you agree to abide by its terms.
+[^1]: something
+[^2]: very new line should be pre
+
+
+
+
 
 ## License
 
