@@ -6,7 +6,7 @@ Stochastic ground motion simulations with variability in model parameters.
 
 A CLI interface for the implementation of the `stochasict finite-fault model`. Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
 
-> *Note: A concise introduction is shown below while a thorough Python implementation can be found in another [repo](https://github.com/leslieDLcy/eqstochsim).*
+> *Note: A concise introduction is shown below while a thorough Python implementation can be found in another [repo](https://github.com/leslieDLcy/eqstochsim). A technical formulation can be found in the collapsed section below*
 
 <details><summary>formulation of the `stochastic finite fault model`</summary>
 <p>
