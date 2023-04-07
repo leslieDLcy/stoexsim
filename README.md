@@ -4,7 +4,7 @@ A stochastic implementation of EXSIM
 
 ## Introduction
 
-This repo is a wrapper (CLI interface) for the implementation of the EXSIM (stochasict finite-fault model). Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
+A CLI interface for the implementation of the EXSIM (stochasict finite-fault model). Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
 
 > *A concise introduction is shown below while a thorough Python implementation can be found in another repo.*
 
@@ -20,27 +20,30 @@ Particularly, the variability of such effects in the spectral formulation and he
 
 
 
-## Functionalities in short
+## functionalities in short
 
 - [x] A CLI interface facilitating the use of stochastic finite fault model;
 - [x] Aleatoric uncertainty on the region-specific parameters
 
 ## how *stochastic* the simulations are ?
 
-Though bearing the name "*the stochastic method*" for a while, Boore's implementation[^1] is not the only stochastic implementation in simulating ground motions of certainty earthquake scenarios. It is, however, more appropritely referred to as *stochastic source method*[^2]. A standard implementation, shown below, will consider random slip distribution and hypocenter location, coupled with random phase in generating time series.  
+Though bearing the name "*the stochastic method*" for a while, Boore's model[^1] is not the only stochastic implementation in simulating ground motions of certainty earthquake scenarios. It should be, however, more appropritely referred to as *stochastic source method*[^2]. A standard implementation, shown below, will consider random slip distribution and hypocenter location, coupled with random phase in generating time series.  
 
 ```shell
 $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
 ```
 
+One step further, to reflect the aleatoric uncertainty of many region-specific parameters and then the variability of ground motions:
 
+
+
+For practical convenience, you will probability want to generate a suite of simulations for a certain earthquake scenario:
 
 
 
 
 ## References
 
-Citation:
 ```markdown
 @article{chen2023physics,
   title={A physics-informed Bayesian framework for characterizing ground motion process in the presence of missing data},
