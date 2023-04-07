@@ -1,12 +1,12 @@
 # stoexsim
 
-A stochastic implementation of the finite fault model in generating ground motions.
+Stochastic ground motion simulations with variability in model parameters.
 
 ## Introduction
 
 A CLI interface for the implementation of the EXSIM (stochasict finite-fault model). Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
 
-> *A concise introduction is shown below while a thorough Python implementation can be found in another repo.*
+> *Note: A concise introduction is shown below while a thorough Python implementation can be found in another [repo](https://github.com/leslieDLcy/eqstochsim).*
 
 <details><summary>formulation of the Stochastic finite fault model</summary>
 <p>
@@ -38,7 +38,7 @@ $ "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $
 One step further, to reflect the aleatoric uncertainty of many region-specific parameters and then the variability of ground motions:
 ![alt text](visualizations/alea_single.jpeg "single aleatoric simulations")
 
-For practical convenience, you will probability want to generate a suite of simulations for a certain earthquake scenario. Input the number of simulations when prompted.
+For practical convenience, you will probably want to generate a suite of simulations for a certain earthquake scenario. Input the number of simulations when prompted.
 ![alt text](visualizations/alea_ensemble.jpeg "a suite of simulations")
 
 
