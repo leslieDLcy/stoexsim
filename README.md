@@ -26,6 +26,7 @@ Particularly, the variability of such effects in the spectral formulation and he
 
 - [x] A CLI interface facilitating the use of stochastic finite fault model;
 - [x] Aleatoric uncertainty on the region-specific parameters
+- [x] An easy implementation of generating an ensemble of simulations
 
 ## how *stochastic* the simulations are ?
 
