@@ -1,9 +1,24 @@
 #!/bin/tcsh
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# ==============================================================================
+
 rm -rf src/stoexsim/output
 
-# Previously, 4 inputs are given by args: 
+### facilitate multi-processing ###
+# Previously, 4 inputs are given by args, such as:
 # "mechanism=N;depth=10;Mw=6.5;Repi=10; csh do_exsim.csh $mechanism $depth $Mw $Repi"
-# Now to facilitate multi-processing, they are instead directly given below 
+# To facilitate multi-processing, it's recommended to input them directly below 
 
 set argv1=N  # mechanism
 set argv2=9.2  # depth
@@ -45,20 +60,15 @@ set DYN_RAN=`bash -c 'echo $RANDOM'`
 
 # Hint: -Normal distribution - usage: ndev <mean> <stdev> $RANDOM [niter] [min max]\n
 set epsilon=`src/stoexsim/random/normdev 0 1 $RANDOM $DYN_RAN -5 5` #normal distibution
-#set epsilon=0
 
-##### Depth is drawn from a truncated Normal distribution #####
+### Depth is drawn from a truncated Normal distribution ###
 set Zh=$argv2	# Depth to hypocentre (this will be 3 km)
 set Zh_std=10.
 # Hint: -Normal distribution - usage: ndev <mean> <stdev> $RANDOM [niter] [min max]\n
 set Zh=`src/stoexsim/random/normdev $Zh $Zh_std $RANDOM $DYN_RAN 2 30`  #normal distibution
 
-
-##### set up Kappa aleatoric #####
-# Kappa from a uniform distribution
-# set Kappa=0.02  # from Jaleena
+### set up Kappa aleatoric ###
 set Kappa=`python -c "import numpy; print(numpy.random.uniform(0.02, 0.08))"`
-
 
 foreach Mw ( $argv3 )
 set DYN_RAN2_Td575_interEV=`bash -c 'echo $RANDOM'` # inter-event epsilon (used for Td)
@@ -69,31 +79,7 @@ printf "%% Stochastic finite fault model with aleatoric uncertainty %%\n"
 printf "%%==========================================================%%\n"
 
 
-##### Set the SD (stress-parameter) at the given M aleatoric #####
-# Leslie add: below is to set up mean SD parameter
-# we further model `SD` as a log10normal distribution 
-
-# Previous code block by Bens
-########################
-# set sd=`echo "" | awk '{print '$sd_scale'*'$sd_low'*10^('$sdi_in'*('$Mw'-'$sd_low_M'))}'`
-# # If above sd_M hinge
-# if ( `echo "" | awk '{if ('$Mw'>'$sd_M'){print 1}; if ('$Mw'<='$sd_M'){print 0}}'` == "1" ) then
-# 	set sd=`echo "" | awk '{print '$sd_in'}'`
-# endif
-# # If below sd_M_low hinge
-# if ( `echo "" | awk '{if ('$Mw'<'$sd_low_M'){print 1}; if ('$Mw'>='$sd_low_M'){print 0}}'` == "1" ) then
-# 	set sd=`echo "" | awk '{print '$sd_low'}'`
-# endif
-
-# # # change sd into log10 scale as the mean
-# set sd_log10=`echo "" | awk '{print ((log('$sd')/log(10.)))}'`
-########################
-
-
-
-##### new implementation of Mw-SD by Leslie #####
-
-
+### Set the SD (stress-parameter) at the given M aleatoric ###
 # give me back the `log_sd` as the mean based a M-sd relation from Bindi
 # change unit from pa to bar
 # hint: sd_log follows Gaussian distribution, eg N(2.14, 0.31^2) from Atkinson
@@ -102,7 +88,6 @@ set sd_inbar=`echo "" | awk '{print (((10^(6.02 + 0.09266*5.17 + ('$Mw'-5.17)*0.
 
 # # change sd into log10 scale as the "mean" of the normal distribution
 set sd_log10=`echo "" | awk '{print ((log('$sd_inbar')/log(10.)))}'`
-
 
 # mannually set up the std for the lognormal distribution
 set sd_dev=0.1
@@ -113,11 +98,8 @@ set sd_sample_log10=`src/stoexsim//random/normdev $sd_log10 $sd_dev $RANDOM $DYN
 # change the sample from log scale back to natural scale
 set sd_sample=`echo "" | awk '{print ((10^('$sd_sample_log10')))}'`
 
-# echo "a SD sample used in computation" $sd_sample
-## change from here to below that '$sd' -> '$sd_sample' ###
 
-
-##### Now setup the fault dimensions #####
+### setup the fault dimensions ###
 # M < 5.25: square - area equiv to circular rupture model (Eshelby)
 set HypL=0 # Along-strike distance for Hypocentre (for small M, point source = 0)
 if ( `echo "" | awk '{if('$Mw'<5.25){print 1}; if('$Mw'>=5.25){print 0}; }'` == 1 ) then
@@ -215,7 +197,6 @@ set b2=`python -c "import numpy; print(numpy.random.normal(-0.57, 0.5))"`
 ### site amplification ###
 set SITEAMP=`python -c "import numpy; print(10**(numpy.random.uniform(-0.15, 0.15)))"`
 
-
 # We will work and store the results in this directory:
 mkdir -p src/stoexsim/output 
 cd src/stoexsim/output 
@@ -229,7 +210,6 @@ $argv4 \
 	echo $Rjb "-90" >> Rjb.dat
 	set Rhyp_e=`echo | awk '{print sqrt('$Rjb'^2+'$Zh'^2)}'` # Assume here Rjb=Repi
 end
-
 
 
 # Update the input file
@@ -267,11 +247,6 @@ echo "" | ../exsim_dmb_171016/exsim_dmb_be
 
 end
 
-# if output in zip file
-# #compress
-# foreach file ( *.out )
-# 	gzip $file 
-# end
 cd ../../../
 mkdir -p simulation_results
 cat src/stoexsim/output/EXSIM_DMB_M6.5__acc_hypo001_sim001_s001.out > simulation_results/accrecords_sd_${sd_sample}.txt
