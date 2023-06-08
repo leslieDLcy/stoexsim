@@ -6,20 +6,15 @@ Stochastic ground motion simulations with variability in model parameters.
 
 A CLI interface for the implementation of the `stochasict finite-fault model`. Particularly, we provide extra capabilities in modeling some key parameters as random variables to account for variability.
 
-> *Note: A concise introduction is shown below in the collapsable section while a thorough Python implementation can be found in another [repo](https://github.com/leslieDLcy/eqstochsim). A technical formulation can be found in the collapsed section below*. This type of stochastic model is referred to as source-based models. On the other hand, there is another type of site-based stochastic models that are popular in the study of stochastic dynamics, check out [ktnsrm](https://github.com/leslieDLcy/ktnsrm) as a template in implementing those models.
+> *Note: A concise introduction is shown below in the collapsable section while a thorough Python implementation can be found in another [repo](https://github.com/leslieDLcy/eqstochsim). A technical formulation can be found in the section below*. This type of stochastic model is referred to as source-based models. On the other hand, there is another type of site-based stochastic models that are popular in the study of stochastic dynamics, check out [ktnsrm](https://github.com/leslieDLcy/ktnsrm) as a template in implementing those models.
 
-<details><summary>formulation of the `stochastic finite fault model`</summary>
-<p>
-
+## formulation
 A stochastic representation that encapsulates the physics of the earthquake process and wave propagation plays the central role, from the seismological perspective, in characterizing the ground motions. One of the most desired advantage is that such type of representations explicitly distill the knowledge of various factors affecting ground motions (e.g. source, path, and site) into a parametric formulation.
 In this study, we have adopted a well-validated stochastic seismological model, as given below, whereby source process, attenuation, and site effects are encapsulated in a parameterized form of the amplitude spectrum. A finite fault strategy is particularly employed to represent the geometry of larger ruptures for large earthquakes.
 
 $$A(f; \Theta) = E(f, M; \theta_{E}) \times P(f, R; \theta_{P}) \times S(f; \theta_{S})$$
 
 Particularly, the variability of such effects in the spectral formulation and hence the uncertainty in stochastic simulations are represented by probability distribution over the input parameters $\Theta=(\theta_{E}, \theta_{P}, \theta_{S}) \sim p(\Theta)$.
-</p>
-</details>
-
 
 
 ## functionalities in short
