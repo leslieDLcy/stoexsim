@@ -67,6 +67,6 @@ For practical convenience, you will probably want to generate a suite of simulat
 
 ## License
 
-`stoexsim` was created by Y. Chen. It is licensed under the terms of the MIT license.
+`stoexsim` was created by Y. Chen and Benjamin. It is licensed under the terms of the MIT license.
 
 <!-- TODO: Tweak the standart out look of the CLI -->
